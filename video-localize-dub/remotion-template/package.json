@@ -1,0 +1,12 @@
+{
+  "name": "video-localize-dub-render",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Caption overlay renderer used by the video-localize-dub skill (render.py).",
+  "dependencies": {
+    "@remotion/cli": "4.0.529",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.529"
+  }
+}

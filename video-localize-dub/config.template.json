@@ -1,0 +1,134 @@
+{
+  "_comment": "Copied to <job>/job.json by init_job.py. Fill from the user's answers (SKILL.md Phase 2). Blocks are ids from analysis/ocr.json.",
+  "source": "",
+  "video": {},
+  "target_language": "en",
+  "dub": {
+    "enabled": true,
+    "speaker_voices": {
+      "S1": "Mia"
+    },
+    "style_instruction": "Natural short-video narration. Clear, confident, steady even pace. No long pauses.",
+    "target_rate": null,
+    "min_tempo": 0.95,
+    "max_tempo": 1.1,
+    "min_gap_s": 0.08,
+    "max_early_shift_s": 0.3,
+    "background": "separate",
+    "background_file": null,
+    "voice_level_db": -18,
+    "background_db_below_voice": 14,
+    "duck_db": 4,
+    "background_volume": 1.0,
+    "voice_volume": 1.0,
+    "speaker_styles": {}
+  },
+  "captions": {
+    "enabled": true,
+    "replace_blocks": [],
+    "placement": "match_block",
+    "anchor_block": null,
+    "custom_center": [
+      0.5,
+      0.78
+    ],
+    "rotation_deg": null,
+    "max_width_ratio": 0.9,
+    "font_family": "Impact, 'Arial Black', sans-serif",
+    "font_file": null,
+    "size_mode": "fixed",
+    "uppercase": true,
+    "two_lines": true,
+    "max_words_per_line": 5,
+    "words_per_card": "auto",
+    "max_chars_per_line": 12,
+    "line1": {
+      "size": 34,
+      "color": "#FFE600",
+      "letter_spacing": 1.2
+    },
+    "line2": {
+      "size": 32,
+      "color": "#FFFFFF",
+      "letter_spacing": 1.0
+    },
+    "line_gap": 0.05,
+    "stroke_px": 4.5,
+    "stroke_color": "#000000",
+    "shadow": "0 4px 8px rgba(0,0,0,0.95), 0 1px 3px rgba(0,0,0,0.8)",
+    "plate": null,
+    "highlight": null,
+    "animation": "pop",
+    "lead_frames": 2,
+    "bridge_gap_frames": 10,
+    "min_duration_s": 1.0
+  },
+  "removal": {
+    "engine": "opencv",
+    "padding_px": 6,
+    "blocks": {},
+    "default": {
+      "mode": "inpaint"
+    }
+  },
+  "watermark": {
+    "enabled": false,
+    "text": "YourMark",
+    "angle_deg": -25,
+    "opacity": 0.176,
+    "font_size": 250,
+    "font_file": "arialbd.ttf",
+    "shadow_opacity": 0.4
+  },
+  "hardware": {
+    "device": "auto",
+    "encoder": "libx264",
+    "threads": "auto",
+    "remotion_concurrency": "auto",
+    "remotion_gl": null
+  },
+  "render": {
+    "concurrency": "auto",
+    "crf": 17,
+    "remotion_node_modules": null
+  },
+  "output": {
+    "dir": "",
+    "basename": ""
+  },
+  "_doc": {
+    "dub.background": "separate (demucs removes voice, keeps music) | none | original (only if source has no speech) | file (dub.background_file)",
+    "captions.placement": "match_block (center/angle of anchor_block or replace_blocks) | bottom | custom (custom_center = [x,y] fractions)",
+    "captions.size_mode": "fixed (line1/line2.size in video pixels) | match (from OCR char height of the anchor block)",
+    "captions.animation": "pop | fade | slide | none",
+    "captions.highlight": "null or {\"color\":\"#FFFFFF\",\"plate\":\"#8A5CF6\",\"radius\":6} = karaoke word highlight",
+    "captions.plate": "null or {\"color\":\"rgba(0,0,0,0.6)\",\"radius\":10,\"padding\":10}",
+    "removal.blocks": "{\"B2\": {\"mode\":\"inpaint\"}, \"B3\": {\"mode\":\"blur\",\"strength\":25}, \"B1\": {\"mode\":\"color\",\"color\":\"#000000\",\"opacity\":0.8,\"radius\":10}, \"B4\": {\"mode\":\"keep\"}}; optional per block: padding_px, mask stroke|box, diff_threshold (30), grow_px (inpaint hole growth, default 0.3 x char height), include_boxes (true), context_px (lama)",
+    "hardware": "device auto|cpu|cuda|mps|directml (LaMa, demucs; whisper/OCR pick CUDA themselves); encoder libx264 (default, best quality/size) | auto (first working GPU encoder: h264_nvenc / h264_amf / h264_qsv / h264_videotoolbox) | one of those; threads auto|N; remotion_concurrency auto|N (auto from cores + free RAM); remotion_gl null|angle|egl|swangle. Check this PC: py -3.12 scripts/hw.py",
+    "removal.engine": "opencv (built in, fast, smears on large/complex areas) | lama (better, needs simple-lama-inpainting + ~200 MB model, slower)",
+    "watermark.angle_deg": "CSS convention: negative = rising to the right",
+    "dub.voice_level_db": "voice RMS while speaking (dBFS); music sits background_db_below_voice under it and is ducked duck_db more while the voice speaks; background_volume is an extra multiplier",
+    "target_language": "ISO code of the dub/caption language (en default). MiMo preset voices: en Mia/Chloe/Milo/Dean, zh 冰糖/茉莉/苏打/白桦",
+    "dub.enabled": "false = captions/removal only (source without speech)",
+    "dub.speaker_voices": "{\"S1\": \"Mia\", \"S2\": \"Dean\"} - speaker ids from analysis/speakers.json",
+    "dub.style_instruction": "natural-language delivery instruction sent to MiMo TTS; dub.speaker_styles {\"S2\": \"...\"} overrides per speaker",
+    "dub.target_rate": "null = target-language default (en ~2.7 words/s) for check_script budgets, or a number",
+    "dub.min_tempo / max_tempo": "allowed time-stretch range per line (0.95-1.10 keeps the pace even)",
+    "dub.min_gap_s / max_early_shift_s": "minimum silence between lines; how much earlier than the original a line may start",
+    "dub.voice_volume": "extra multiplier on the voice after normalization",
+    "captions.enabled": "false = no new captions (removal/dub only)",
+    "captions.replace_blocks": "OCR block ids whose timing/place the new captions take, e.g. [\"B2\"]; anchor_block = which one sets center/angle (default first)",
+    "captions.rotation_deg": "null = angle of the anchor block, else degrees (CSS: positive = clockwise)",
+    "captions.max_width_ratio": "max caption width as fraction of video width",
+    "captions.font_family / font_file": "CSS font stack; font_file = a .ttf/.otf path (or name in the OS font folders) bundled into the render",
+    "captions.two_lines / max_words_per_line / max_chars_per_line / words_per_card": "card layout; words_per_card auto = like the original's words-on-screen",
+    "captions.line1 / line2": "size (px, used when size_mode fixed), color, letter_spacing (px)",
+    "captions.stroke_px / stroke_color / shadow": "outline width + color, CSS text-shadow",
+    "captions.lead_frames / bridge_gap_frames / min_duration_s": "card shows N frames before the word; gaps shorter than this are bridged; minimum card duration",
+    "removal.default": "options applied to every block not listed in removal.blocks; removal.padding_px = extra px around OCR boxes",
+    "watermark": "enabled, text, opacity 0..1, font_size (px at 1080 wide), font_file, shadow_opacity",
+    "render.crf": "x264 quality of the delivered video (17 = visually lossless); concurrency = old name of hardware.remotion_concurrency",
+    "render.remotion_node_modules": "null = auto (shared runtime, else search); or path to an existing project's node_modules with remotion 4.x",
+    "output.dir / basename": "delivery folder and file name stem (init_job sets basename = <source>_<lang>); empty dir = files stay in the job folder"
+  }
+}
